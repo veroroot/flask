@@ -73,7 +73,10 @@ def launch():
     return render_template('lunch.html', a=img_sel, b=img, key=menu_select[0] ,image=menu_select[1])
 '''
 
-
+@app.route('/movies')
+def movies():
+    movies = ['겨울왕국2', '쥬만지', '포드v페라리']
+    return render_template('movies.html', movies=movies)
 
 if __name__== '__main__' :
     app.run(debug=True)
