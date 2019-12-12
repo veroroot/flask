@@ -68,6 +68,8 @@ def launch():
         if 'src' in img.attrs:
             image = img.attrs['src']
             img_list.append(image)
+    # key_choice = random.choice(menu.keys())
+    # image = menu[key_choice]
     menu=[[key, img] for (key, img) in (key_list, img_list)]
     menu_select = random.choice(menu)
     return render_template('lunch.html', a=img_sel, b=img, key=menu_select[0] ,image=menu_select[1])
@@ -90,7 +92,13 @@ def pong():
     keyword = request.form.get('keyword')
     return render_template('pong.html', keyword=keyword)
 
+@app.route('/naver', methods=['GET'])
+def naver():
+    return render_template('naver.html')
 
+@app.route('/google')
+def google():
+    return render_template('google.html')
 
 if __name__== '__main__' :
     app.run(debug=True)
