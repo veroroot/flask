@@ -1,4 +1,4 @@
-from flask import Flask, escape, request
+from flask import Flask, escape, request, render_template
 
 app = Flask(__name__)
 
@@ -17,6 +17,16 @@ def hi():
 @app.route('/veroroot')
 def veroroot():
     return 'hello veroroot'
+
+# app.route에 있는 주소값과 밑에있는 함수명과 같은것이 관례
+@app.route('/html_tag')
+def html_tag():
+    return '<h1>안녕하세요</h1>'
+
+@app.route('/html_file')
+def html_file():
+    return render_template('index.html')
+
 
 if __name__== '__main__' :
     app.run(debug=True)
