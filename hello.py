@@ -46,6 +46,7 @@ def cube(input_num):
     output_num = input_num ** 3
     return render_template('cube.html', html_output_num=output_num, html_input_num=input_num)
 
+# javascript를 활용한 크롤링(동적 크롤링) 되면 가져오는 걸로 ㅠ
 '''
 점심메뉴 가져오기
 @app.route('/lunch')
@@ -99,6 +100,25 @@ def naver():
 @app.route('/google')
 def google():
     return render_template('google.html')
+
+@app.route('/summoner')
+def summoner():
+    return render_template('summoner.html')
+
+@app.route('/opgg')
+def opgg():
+    username = request.args.get('username')
+    opgg_url = f'https://www.op.gg/summoner/userName={username}'
+    
+    response = requests.get(opgg_url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    tier_selector = '#SummonerLayoutContent > div.tabItem.Content.SummonerLayoutContent.summonerLayout-summary > div.SideContent > div.TierBox.Box > div > div.TierRankInfo > div.TierRank'
+    tier = soup.select_one(tier_selector).text
+    winrate_selector = '#SummonerLayoutContent > div.tabItem.Content.SummonerLayoutContent.summonerLayout-summary > div.SideContent > div.TierBox.Box > div > div.TierRankInfo > div.TierInfo > span.WinLose > span.winratio'
+    winrate = soup.select_one(winrate_selector).text[-3:]
+
+    return render_template('opgg.html', username=username, opgg_url=opgg_url, tier=tier, winrate=winrate)
+
 
 if __name__== '__main__' :
     app.run(debug=True)
